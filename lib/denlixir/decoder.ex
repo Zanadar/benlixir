@@ -18,7 +18,7 @@ defmodule Benlixir.Decoder do
   end
 
   defp decode_item(map, << ch::binary-size(1), rest::binary >>) when ch == "l" do
-    rest |> IO.puts
+    decode_list(map, [], rest)
   end
 
   defp decode_item(map, << ch::binary-size(1), rest::binary >>) when ch == "i" do
@@ -33,10 +33,16 @@ defmodule Benlixir.Decoder do
     [map, {value, rest}] = decode_item(map, rest)
     key = String.to_atom(key)
     map = Map.put(map, key, value)
-    # ["Decode_map", map, rest] |> IO.inspect
     decode(map, rest)
 
   end
+
+  defp decode_list(map, list, "e"<>rest), do: [map, {Enum.reverse(list), rest}]
+  defp decode_list(map, list, rest) do
+    [map, {item, rest}] = decode_item(map, rest)
+    decode_list(map, [item | list], rest)
+  end
+
   defp decode_string(map, << ch::binary-size(2), rest::binary >> ) do
     count = ch |> String.first |> String.to_integer
     << word::binary-size(count), rest::binary >> = rest

@@ -35,6 +35,11 @@ defmodule BenlixirTest do
 
   test "Decode with list as value" do
     input = "d4:listl3:one3:two5:threeee"
-    assert Decode.decode(in)
+    assert Decoder.decode(input) == {:ok, %{list: ["one", "two", "three"]}}
+  end
+
+  test "Decode with list and string as value" do
+    input = "d4:listl3:one3:two5:threee3:foo3:bare"
+    assert Decoder.decode(input) == {:ok, %{list: ["one", "two", "three"], foo: "bar"}}
   end
 end
