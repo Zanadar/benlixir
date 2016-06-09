@@ -10,13 +10,17 @@ defmodule BenlixirTest do
     {:ok, data: input}
   end
 
-  @tag :pending
   test "Decoder always returns a map", %{data: input} do
     {:ok, message} = Decoder.decode(input)
     assert is_map(message)
   end
 
-  @tag :pending
+  test "Decodes keys properly", %{data: input} do
+    {:ok, dict} = Decoder.decode(input)
+    assert dict.announce == "http://bttracker.debian.org:6969/announce"
+assert dict[:comment] == "\"Debian CD from cdimage.debian.org\""
+  end
+
   test "Decoder throws when given anything other than a bitstring", %{data: input} do
     input = []
     {error, _} = Decoder.decode(input)
@@ -36,6 +40,11 @@ defmodule BenlixirTest do
   test "Decode with list as value" do
     input = "d4:listl3:one3:two5:threeee"
     assert Decoder.decode(input) == {:ok, %{list: ["one", "two", "three"]}}
+  end
+
+  test "Decode with dict as value" do
+    input = "d4:dictd3:foo3:baree"
+    assert Decoder.decode(input) == {:ok, %{dict: %{foo: "bar"}}}
   end
 
   test "Decode with list and string as value" do
