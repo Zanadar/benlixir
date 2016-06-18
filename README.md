@@ -1,6 +1,6 @@
 # Benlixir
 
-This module decodes [bencode](. Its designed to be used as part of a bittorrent client or library of some sort. 
+This module decodes [bencode](https://en.wikipedia.org/wiki/Bencode). Its designed to be used as part of a bittorrent client or library of some sort. 
 
 ## What I learned
 I had implemented something similair to this in `Go`, which was relatively straightforward. In elixir, all looping has to be done through recursion, and so this was a fun exercise in that topic. I built it using TDD. 
