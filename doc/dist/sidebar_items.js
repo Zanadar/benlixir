@@ -1,0 +1,1 @@
+sidebarNodes={"exceptions":[],"extras":[{"id":"api-reference","title":"API Reference","headers":[]}],"modules":[{"id":"Benlixir","title":"Benlixir"},{"id":"Benlixir.Decoder","title":"Benlixir.Decoder","functions":[{"id":"decode/1","anchor":"decode/1"}]}],"protocols":[]}
